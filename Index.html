@@ -15,6 +15,43 @@ box-sizing:border-box;
 font-family:'Montserrat',sans-serif;
 }
 
+/* ===== LOADING CINEMATOGRÁFICO ===== */
+#loader{
+position:fixed;
+width:100%;
+height:100%;
+background:#000;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:9999;
+animation:fadeOut 1s ease forwards;
+animation-delay:2.5s;
+}
+
+.loader-text{
+color:#fff;
+font-size:22px;
+font-weight:900;
+letter-spacing:3px;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{opacity:0.3;}
+50%{opacity:1;}
+100%{opacity:0.3;}
+}
+
+@keyframes fadeOut{
+to{
+opacity:0;
+visibility:hidden;
+}
+}
+
+/* ===== BODY ===== */
 body{
 background:linear-gradient(160deg,#000000,#111111 40%,#1a0000 100%);
 color:#fff;
@@ -31,9 +68,9 @@ max-width:420px;
 animation:fadeIn 1.2s ease forwards;
 opacity:0;
 transform:translateY(20px);
+animation-delay:2.5s;
 }
 
-/* ANIMAÇÃO ENTRADA */
 @keyframes fadeIn{
 to{
 opacity:1;
@@ -41,7 +78,7 @@ transform:translateY(0);
 }
 }
 
-/* CARD PERFIL */
+/* ===== CARD ===== */
 .profile-card{
 background:rgba(255,255,255,0.05);
 backdrop-filter:blur(18px);
@@ -51,12 +88,6 @@ padding:30px 22px;
 text-align:center;
 box-shadow:0 20px 60px rgba(0,0,0,0.6);
 margin-bottom:28px;
-animation:cardPop 1.4s ease;
-}
-
-@keyframes cardPop{
-0%{transform:scale(0.95);opacity:0;}
-100%{transform:scale(1);opacity:1;}
 }
 
 .profile-img{
@@ -69,7 +100,7 @@ box-shadow:0 10px 30px rgba(255,30,30,0.4);
 margin-bottom:18px;
 }
 
-/* NOME + BADGE */
+/* ===== NOME + BADGE ===== */
 .name-wrapper{
 display:flex;
 align-items:center;
@@ -85,9 +116,10 @@ letter-spacing:1px;
 }
 
 .badge{
+position:relative;
 background:#1da1f2;
-width:20px;
-height:20px;
+width:22px;
+height:22px;
 border-radius:50%;
 display:flex;
 align-items:center;
@@ -95,6 +127,24 @@ justify-content:center;
 font-size:12px;
 font-weight:bold;
 color:#fff;
+overflow:hidden;
+}
+
+/* brilho animado */
+.badge::after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,0.8),transparent);
+animation:shine 2.5s infinite;
+}
+
+@keyframes shine{
+0%{left:-100%;}
+100%{left:200%;}
 }
 
 .tag{
@@ -113,7 +163,7 @@ color:#d4d4d4;
 line-height:1.6;
 }
 
-/* BOTÕES */
+/* ===== BOTÕES ===== */
 .links a{
 display:flex;
 align-items:center;
@@ -129,24 +179,6 @@ transition:0.3s ease;
 background:linear-gradient(135deg,#ff1e1e,#b30000);
 color:#fff;
 box-shadow:0 12px 30px rgba(255,0,0,0.35);
-animation:slideUp 1s ease forwards;
-opacity:0;
-}
-
-.links a:nth-child(1){animation-delay:0.3s;}
-.links a:nth-child(2){animation-delay:0.5s;}
-.links a:nth-child(3){animation-delay:0.7s;}
-.links a:nth-child(4){animation-delay:0.9s;}
-
-@keyframes slideUp{
-to{
-opacity:1;
-transform:translateY(0);
-}
-from{
-opacity:0;
-transform:translateY(15px);
-}
 }
 
 .links a:hover{
@@ -158,7 +190,6 @@ box-shadow:0 18px 40px rgba(255,0,0,0.6);
 transform:scale(0.97);
 }
 
-/* BOTÃO DE DESTAQUE */
 .highlight{
 background:linear-gradient(135deg,#ffffff,#d9d9d9);
 color:#000;
@@ -185,6 +216,10 @@ h1{font-size:22px;}
 </head>
 
 <body>
+
+<div id="loader">
+<div class="loader-text">SILVA REPÓRTER</div>
+</div>
 
 <div class="container">
 
