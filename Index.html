@@ -1,100 +1,149 @@
-<!DOCTYPE html> <html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silva Repórter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }body {
-        background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
-        color: #fff;
+    <title>Silva Repórter</title><!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(160deg, #000000, #111111 40%, #1a0000 100%);
+        color: #ffffff;
+        min-height: 100vh;
         display: flex;
         justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 20px;
+        padding: 25px 18px 40px;
     }
 
     .container {
         width: 100%;
         max-width: 420px;
-        text-align: center;
     }
 
-    .card {
-        background: #181818;
-        padding: 30px 20px;
-        border-radius: 20px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-        margin-bottom: 25px;
+    /* ===== PROFILE CARD ===== */
+    .profile-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 28px;
+        padding: 30px 22px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        margin-bottom: 28px;
     }
 
     .profile-img {
-        width: 120px;
-        height: 120px;
+        width: 130px;
+        height: 130px;
         border-radius: 50%;
         object-fit: cover;
-        border: 4px solid #ff2d2d;
-        margin-bottom: 15px;
+        border: 4px solid #ff1e1e;
+        box-shadow: 0 10px 30px rgba(255, 30, 30, 0.4);
+        margin-bottom: 18px;
     }
 
     h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
-        color: #ff2d2d;
+        font-size: 26px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+    }
+
+    .tag {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 50px;
+        background: #ff1e1e;
+        margin-bottom: 16px;
     }
 
     .bio {
         font-size: 14px;
-        color: #ccc;
+        color: #d4d4d4;
         line-height: 1.6;
     }
 
+    /* ===== LINKS ===== */
     .links a {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
         text-decoration: none;
-        background: #ff2d2d;
-        color: #fff;
-        padding: 14px;
-        margin-bottom: 15px;
-        border-radius: 12px;
-        font-weight: 600;
+        padding: 16px;
+        margin-bottom: 16px;
+        border-radius: 18px;
+        font-weight: 700;
+        font-size: 15px;
         transition: 0.3s ease;
+        background: linear-gradient(135deg, #ff1e1e, #b30000);
+        color: #fff;
+        box-shadow: 0 12px 30px rgba(255, 0, 0, 0.35);
     }
 
     .links a:hover {
-        background: #ffffff;
-        color: #ff2d2d;
-        transform: translateY(-3px);
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 18px 40px rgba(255, 0, 0, 0.6);
+    }
+
+    .links a:active {
+        transform: scale(0.98);
+    }
+
+    /* ===== PREMIUM BUTTON VARIATION ===== */
+    .highlight {
+        background: linear-gradient(135deg, #ffffff, #d9d9d9);
+        color: #000;
+        box-shadow: 0 12px 30px rgba(255, 255, 255, 0.25);
+    }
+
+    .highlight:hover {
+        box-shadow: 0 18px 45px rgba(255, 255, 255, 0.4);
     }
 
     footer {
-        margin-top: 20px;
+        text-align: center;
+        margin-top: 25px;
         font-size: 12px;
         color: #777;
     }
+
+    /* ===== MOBILE OPTIMIZATION ===== */
+    @media (max-width: 380px) {
+        h1 { font-size: 22px; }
+        .profile-img { width: 110px; height: 110px; }
+        .links a { font-size: 14px; padding: 14px; }
+    }
+
 </style>
 
 </head>
 <body><div class="container">
-    <div class="card">
-        <img src="https://via.placeholder.com/150" alt="Foto Silva Repórter" class="profile-img">
+
+    <div class="profile-card">
+        <img src="https://via.placeholder.com/300" alt="Silva Repórter" class="profile-img">
         <h1>Silva Repórter</h1>
+        <div class="tag">Jornalismo nas Ruas</div>
         <p class="bio">
-            Jornalista de rua, sempre direto do fato. Levando informação com responsabilidade, coragem e presença onde a notícia acontece. Aqui você encontra meus principais canais e contatos.
+            Presença onde a notícia acontece. Cobertura direta, opinião firme e informação com responsabilidade.
+            Aqui você acessa todos os meus canais oficiais.
         </p>
     </div>
 
     <div class="links">
-        <a href="#" target="_blank">Instagram Oficial</a>
-        <a href="#" target="_blank">Canal no YouTube</a>
-        <a href="#" target="_blank">Fale Comigo no WhatsApp</a>
-        <a href="#" target="_blank">Página de Notícias</a>
+        <a href="#" target="_blank" class="highlight">🔥 Última Reportagem</a>
+        <a href="#" target="_blank">📸 Instagram Oficial</a>
+        <a href="#" target="_blank">🎥 Canal no YouTube</a>
+        <a href="#" target="_blank">📲 Fale no WhatsApp</a>
 
         <!-- LINK EXTRA 5 -->
         <!-- <a href="#" target="_blank">Link Extra 5</a> -->
@@ -116,8 +165,9 @@
     </div>
 
     <footer>
-        © 2026 Silva Repórter - Todos os direitos reservados.
+        © 2026 Silva Repórter — Todos os direitos reservados.
     </footer>
+
 </div>
 
 </body>
