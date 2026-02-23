@@ -29,7 +29,7 @@
         body {
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 50% 50%, rgba(230, 25, 25, 0.08) 0%, transparent 50%);
+                radial-gradient(circle at 50% 50%, rgba(230, 25, 25, 0.1) 0%, transparent 60%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -40,122 +40,134 @@
             overflow: hidden;
         }
 
-        /* ===== ANIMAÇÃO DE FLUTUAR ===== */
+        /* ===== ANIMAÇÕES ===== */
         @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
         }
 
         @keyframes pulse-red {
-            0% { filter: drop-shadow(0 0 5px var(--primary-glow)); }
-            50% { filter: drop-shadow(0 0 20px var(--primary)); }
-            100% { filter: drop-shadow(0 0 5px var(--primary-glow)); }
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
         }
 
+        /* ===== COMPONENTES ===== */
         .hero-section {
             text-align: center;
-            max-width: 500px;
+            max-width: 450px;
             z-index: 10;
         }
 
-        /* Astronauda e Lua em SVG */
-        .illustration-container {
-            width: 280px;
-            margin: 0 auto 30px;
-            animation: float 6s ease-in-out infinite;
+        .image-wrapper {
             position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 40px;
+            animation: float 5s ease-in-out infinite;
         }
 
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        /* A interrogação sobre a foto */
         .question-mark {
             position: absolute;
-            top: -20px;
-            right: 40px;
-            font-size: 50px;
+            top: -10px;
+            right: -10px;
+            background: var(--primary);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
             font-weight: 800;
-            color: var(--primary);
+            color: white;
+            box-shadow: 0 0 20px var(--primary);
             animation: pulse-red 2s infinite;
-            text-shadow: 0 0 15px var(--primary);
         }
 
-        /* ===== CONTEÚDO ===== */
         .coming-soon-card {
             background: var(--glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 32px;
-            padding: 40px 30px;
+            padding: 40px 25px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
         .tag {
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 3px;
             color: var(--primary);
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: block;
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
             margin-bottom: 15px;
-            line-height: 1.1;
+            line-height: 1.2;
         }
 
         p {
-            font-size: 15px;
+            font-size: 14px;
             color: var(--text-dim);
             line-height: 1.6;
             margin-bottom: 30px;
         }
 
-        /* Botão de Voltar/Redes Sociais */
-        .btn-back {
+        .btn-home {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 14px 28px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
+            padding: 16px 32px;
+            background: var(--primary);
+            border-radius: 18px;
             color: white;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 700;
+            font-size: 15px;
             transition: all 0.3s ease;
+            box-shadow: 0 10px 20px var(--primary-glow);
         }
 
-        .btn-back:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px var(--primary-glow);
+        .btn-home:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px var(--primary-glow);
+            filter: brightness(1.1);
         }
 
         footer {
             position: absolute;
             bottom: 30px;
             font-size: 11px;
-            color: #444;
-            letter-spacing: 1px;
+            color: #555;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Partículas de fundo simples */
+        /* Estrelas de fundo */
         .stars {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+            inset: 0;
             background: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.3;
+            opacity: 0.2;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -164,34 +176,19 @@
     <div class="stars"></div>
 
     <div class="hero-section">
-        <div class="illustration-container">
+        <div class="image-wrapper">
+            <img src="https://i.imgur.com/fSBwHr0.png" alt="Silva Repórter" class="profile-img">
             <div class="question-mark">?</div>
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <path fill="#e0e0e0" d="M100,20 C144.18,20 180,55.82 180,100 C180,144.18 144.18,180 100,180 C90,180 80.5,178.2 71.8,174.9 C95.5,166.5 112,143.9 112,117 C112,85.5 89.5,59.3 59.1,52.5 C71.1,32.5 93.4,20 100,20 Z" />
-                <circle fill="#bcbcbc" cx="130" cy="60" r="8" />
-                <circle fill="#bcbcbc" cx="150" cy="110" r="5" />
-                <circle fill="#bcbcbc" cx="120" cy="140" r="10" />
-                
-                <g transform="translate(85, 85)">
-                    <rect x="0" y="20" width="30" height="35" rx="10" fill="white" />
-                    <rect x="-5" y="0" width="40" height="35" rx="15" fill="white" />
-                    <rect x="2" y="5" width="26" height="20" rx="10" fill="#333" />
-                    <rect x="0" y="50" width="12" height="25" rx="5" fill="white" transform="rotate(-90 0 50)" />
-                    <rect x="20" y="50" width="12" height="25" rx="5" fill="white" transform="rotate(-90 20 50)" />
-                    <path d="M0,25 Q-10,35 0,45" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" />
-                    <path d="M30,25 Q40,35 30,45" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" />
-                </g>
-            </svg>
         </div>
 
         <div class="coming-soon-card">
-            <span class="tag">Silva Repórter</span>
+            <span class="tag">Exclusivo</span>
             <h1>EM BREVE<br>NOVIDADES</h1>
-            <p>Estamos explorando novos ângulos para trazer a melhor informação até você. Algo grande está sendo preparado.</p>
+            <p>Estamos preparando algo novo para o canal Silva Repórter. A notícia não para e o novo portal está quase pronto.</p>
             
-            <a href="index.html" class="btn-back">
+            <a href="javascript:history.back()" class="btn-home">
                 <i data-lucide="arrow-left"></i>
-                Voltar ao Início
+                Voltar à Página Principal
             </a>
         </div>
     </div>
@@ -201,7 +198,7 @@
     </footer>
 
     <script>
-        // Inicializar ícones
+        // Inicializa os ícones do Lucide
         lucide.createIcons();
     </script>
 </body>
