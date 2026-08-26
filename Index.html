@@ -2,309 +2,1496 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silva Repórter | Oficial</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="theme-color" content="#080808">
+
+    <meta name="description"
+          content="Silva Repórter — Jornalismo independente, notícias, denúncias, entrevistas e acontecimentos em tempo real.">
+
+    <meta property="og:title" content="Silva Repórter | Jornalismo Independente">
+    <meta property="og:description"
+          content="A voz das ruas e a notícia em tempo real.">
+    <meta property="og:image"
+          content="https://i.imgur.com/xOMsiUk.png">
+
+    <title>Silva Repórter | Jornalismo Independente</title>
+
+    <!-- FONTE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- ÍCONES -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+
+        /* =========================================================
+           ROOT
+        ========================================================= */
+
         :root {
-            --primary: #e61919;
-            --primary-dark: #990000;
-            --bg-dark: #0a0a0a;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-dim: #a0a0a0;
+            --red: #e30613;
+            --red-light: #ff2634;
+            --red-dark: #a9000a;
+
+            --black: #050505;
+            --bg: #080808;
+            --surface: #101010;
+            --surface-2: #151515;
+
+            --white: #ffffff;
+            --text: #f5f5f5;
+            --muted: #969696;
+
+            --border: rgba(255,255,255,.09);
+            --border-hover: rgba(255,255,255,.18);
+
+            --radius-lg: 28px;
+            --radius-md: 18px;
+
+            --shadow:
+                0 25px 70px rgba(0,0,0,.45);
+
+            --red-glow:
+                0 15px 50px rgba(227,6,19,.18);
         }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(230, 25, 25, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(230, 25, 25, 0.05) 0%, transparent 40%);
-            color: var(--text-main);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
+
+            font-family: 'Inter', sans-serif;
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 50% -10%,
+                    rgba(227,6,19,.16),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 0% 70%,
+                    rgba(227,6,19,.07),
+                    transparent 35%
+                ),
+                var(--bg);
+
             overflow-x: hidden;
+
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* ===== LOADER ===== */
+
+        /* =========================================================
+           BACKGROUND GRID
+        ========================================================= */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: .035;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.5) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.5) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 80%
+                );
+        }
+
+
+        /* =========================================================
+           LOADER
+        ========================================================= */
+
         #loader {
             position: fixed;
             inset: 0;
-            background: #000;
+
+            z-index: 9999;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10000;
-            transition: opacity 0.8s ease, visibility 0.8s;
+
+            background: #000;
+
+            transition:
+                opacity .7s ease,
+                visibility .7s ease;
+        }
+
+        body.loaded #loader {
+            opacity: 0;
+            visibility: hidden;
         }
 
         .loader-content {
             text-align: center;
         }
 
-        .loader-bar {
-            width: 120px;
-            height: 2px;
-            background: rgba(255,255,255,0.1);
-            margin-top: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .loader-bar::after {
-            content: '';
-            position: absolute;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--primary);
-            animation: load 1.5s infinite;
-        }
-
-        @keyframes load {
-            100% { left: 100%; }
-        }
-
-        /* ===== CONTAINER PRINCIPAL ===== */
-        .container {
-            width: 100%;
-            max-width: 400px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: show 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 1.2s;
-        }
-
-        @keyframes show {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== PERFIL ===== */
-        .profile-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 32px;
-            padding: 40px 25px;
-            text-align: center;
-            margin-bottom: 24px;
-            position: relative;
-        }
-
-        .img-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-        }
-
-        .profile-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 40px; /* Estilo levemente quadrado/arredondado moderno */
-            object-fit: cover;
-            border: 2px solid var(--glass-border);
-        }
-
-        .status-dot {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 15px;
-            height: 15px;
-            background: #22c55e;
-            border: 3px solid var(--bg-dark);
-            border-radius: 50%;
-        }
-
-        h1 {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .verified-icon {
-            color: #1da1f2;
-            fill: #1da1f2;
-        }
-
-        .tag {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--primary);
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .bio {
+        .loader-logo {
             font-size: 14px;
-            color: var(--text-dim);
-            line-height: 1.6;
-            font-weight: 400;
+            font-weight: 900;
+            letter-spacing: 4px;
         }
 
-        /* ===== LINKS ===== */
-        .links-gap {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+        .loader-sub {
+            margin-top: 8px;
+
+            font-size: 9px;
+            letter-spacing: 3px;
+
+            color: var(--red);
+            text-transform: uppercase;
         }
 
-        .link-card {
+        .loader-line {
+            width: 140px;
+            height: 2px;
+
+            margin: 20px auto 0;
+
+            overflow: hidden;
+
+            background: rgba(255,255,255,.1);
+        }
+
+        .loader-line::after {
+            content: "";
+
+            display: block;
+
+            width: 50%;
+            height: 100%;
+
+            background: var(--red);
+
+            animation: loading 1.2s infinite ease-in-out;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: translateX(-120%);
+            }
+
+            100% {
+                transform: translateX(300%);
+            }
+        }
+
+
+        /* =========================================================
+           CONTAINER
+        ========================================================= */
+
+        .container {
+            position: relative;
+
+            width: min(100% - 32px, 470px);
+
+            margin: 0 auto;
+
+            padding: 28px 0 35px;
+
+            opacity: 0;
+            transform: translateY(25px);
+
+            animation:
+                entrance .9s
+                cubic-bezier(.16,1,.3,1)
+                1s forwards;
+        }
+
+        @keyframes entrance {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================================================
+           TOP BAR
+        ========================================================= */
+
+        .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 24px;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            font-size: 15px;
-            transition: all 0.3s ease;
+
+            margin-bottom: 20px;
+
+            padding: 0 5px;
         }
 
-        .link-card i {
-            width: 20px;
-            height: 20px;
-            color: var(--text-dim);
-            transition: 0.3s;
-        }
+        .brand-mini {
+            display: flex;
+            align-items: center;
+            gap: 8px;
 
-        .link-card:hover {
-            background: rgba(255, 255, 255, 0.07);
-            transform: scale(1.02);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .link-card:hover i {
-            color: var(--text-main);
-            transform: translateX(3px);
-        }
-
-        /* Botão Especial (Destaque) */
-        .link-card.featured {
-            background: var(--primary);
-            border: none;
-            box-shadow: 0 10px 20px rgba(230, 25, 25, 0.2);
-        }
-
-        .link-card.featured i {
-            color: white;
-        }
-
-        .link-card.featured:hover {
-            background: var(--primary-dark);
-            box-shadow: 0 15px 30px rgba(230, 25, 25, 0.4);
-        }
-
-        footer {
-            margin-top: 40px;
             font-size: 11px;
-            color: #555;
-            letter-spacing: 1px;
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
-        /* Esconder loader após carregar */
-        body.loaded #loader {
-            opacity: 0;
-            visibility: hidden;
+        .brand-mini::before {
+            content: "";
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--red);
+
+            box-shadow:
+                0 0 0 4px rgba(227,6,19,.12),
+                0 0 15px rgba(227,6,19,.6);
+
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%,100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .45;
+            }
+        }
+
+        .online {
+            font-size: 9px;
+
+            font-weight: 700;
+
+            color: #6f6f6f;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* =========================================================
+           PROFILE
+        ========================================================= */
+
+        .profile {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 34px 24px 30px;
+
+            text-align: center;
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius-lg);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.065),
+                    rgba(255,255,255,.018)
+                );
+
+            box-shadow: var(--shadow);
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+        }
+
+        .profile::before {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            top: -130px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            background: var(--red);
+
+            opacity: .08;
+
+            filter: blur(65px);
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================================
+           PHOTO
+        ========================================================= */
+
+        .photo-wrapper {
+            position: relative;
+
+            width: 118px;
+            height: 118px;
+
+            margin: 0 auto 20px;
+        }
+
+        .photo-ring {
+            position: absolute;
+            inset: -5px;
+
+            border-radius: 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--red),
+                    transparent 55%
+                );
+
+            opacity: .8;
+
+            z-index: 0;
+        }
+
+        .profile-photo {
+            position: relative;
+            z-index: 1;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            border-radius: 31px;
+
+            border: 3px solid #0d0d0d;
+
+            display: block;
+        }
+
+        .live-dot {
+            position: absolute;
+
+            z-index: 3;
+
+            right: -4px;
+            bottom: 4px;
+
+            width: 19px;
+            height: 19px;
+
+            border-radius: 50%;
+
+            background: #20d66b;
+
+            border: 4px solid #0b0b0b;
+
+            box-shadow:
+                0 0 15px rgba(32,214,107,.5);
+        }
+
+
+        /* =========================================================
+           PROFILE TEXT
+        ========================================================= */
+
+        .category {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            margin-bottom: 11px;
+
+            color: var(--red-light);
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 1.8px;
+
+            text-transform: uppercase;
+        }
+
+        .category::before {
+            content: "";
+
+            width: 18px;
+            height: 1px;
+
+            background: var(--red);
+        }
+
+        .name {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            font-size: clamp(25px, 7vw, 31px);
+
+            font-weight: 900;
+
+            letter-spacing: -1.5px;
+
+            line-height: 1.1;
+        }
+
+        .verified {
+            width: 19px;
+            height: 19px;
+
+            fill: #168cff;
+
+            color: #168cff;
+
+            flex-shrink: 0;
+        }
+
+        .headline {
+            margin-top: 13px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.65;
+        }
+
+        .headline strong {
+            color: #ddd;
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           STATS
+        ========================================================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+
+            margin-top: 25px;
+
+            padding-top: 21px;
+
+            border-top: 1px solid var(--border);
+        }
+
+        .stat {
+            position: relative;
+        }
+
+        .stat:not(:last-child)::after {
+            content: "";
+
+            position: absolute;
+
+            right: 0;
+            top: 5px;
+
+            width: 1px;
+            height: 30px;
+
+            background: var(--border);
+        }
+
+        .stat strong {
+            display: block;
+
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .stat span {
+            display: block;
+
+            margin-top: 4px;
+
+            color: #666;
+
+            font-size: 8px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================================
+           SECTION LABEL
+        ========================================================= */
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin: 27px 4px 12px;
+
+            color: #707070;
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: 1.7px;
+
+            text-transform: uppercase;
+        }
+
+        .section-label::after {
+            content: "";
+
+            flex: 1;
+
+            height: 1px;
+
+            background: var(--border);
+        }
+
+
+        /* =========================================================
+           LINKS
+        ========================================================= */
+
+        .links {
+            display: flex;
+            flex-direction: column;
+
+            gap: 11px;
+        }
+
+        .link {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+
+            min-height: 66px;
+
+            padding: 12px 15px;
+
+            text-decoration: none;
+
+            color: var(--white);
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius-md);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.045),
+                    rgba(255,255,255,.015)
+                );
+
+            transition:
+                transform .25s ease,
+                border-color .25s ease,
+                background .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .link:hover {
+            transform: translateY(-2px);
+
+            border-color: var(--border-hover);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.075),
+                    rgba(255,255,255,.025)
+                );
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,.25);
+        }
+
+        .link:active {
+            transform: scale(.98);
+        }
+
+        .icon-box {
+            width: 40px;
+            height: 40px;
+
+            flex-shrink: 0;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.06);
+
+            color: #d5d5d5;
+        }
+
+        .icon-box svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .link-content {
+            flex: 1;
+
+            margin-left: 13px;
+
+            min-width: 0;
+        }
+
+        .link-title {
+            display: block;
+
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .link-description {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #707070;
+
+            font-size: 9px;
+            font-weight: 500;
+        }
+
+        .arrow {
+            width: 17px;
+            height: 17px;
+
+            color: #555;
+
+            transition: .25s ease;
+        }
+
+        .link:hover .arrow {
+            color: #fff;
+            transform: translateX(3px);
+        }
+
+
+        /* =========================================================
+           FEATURED
+        ========================================================= */
+
+        .featured {
+            border-color: transparent;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--red),
+                    #b70009
+                );
+
+            box-shadow:
+                0 15px 45px rgba(227,6,19,.22);
+        }
+
+        .featured:hover {
+            border-color: transparent;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--red-light),
+                    var(--red-dark)
+                );
+
+            box-shadow:
+                0 20px 55px rgba(227,6,19,.3);
+        }
+
+        .featured .icon-box {
+            background: rgba(0,0,0,.15);
+            color: #fff;
+        }
+
+        .featured .link-description {
+            color: rgba(255,255,255,.7);
+        }
+
+        .featured .arrow {
+            color: rgba(255,255,255,.8);
+        }
+
+
+        /* =========================================================
+           SOCIAL GRID
+        ========================================================= */
+
+        .social-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2,1fr);
+
+            gap: 11px;
+        }
+
+        .social {
+            min-height: 72px;
+
+            padding: 14px;
+
+            display: flex;
+            align-items: center;
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius-md);
+
+            text-decoration: none;
+
+            color: white;
+
+            background: rgba(255,255,255,.025);
+
+            transition: .25s ease;
+        }
+
+        .social:hover {
+            transform: translateY(-2px);
+
+            border-color: var(--border-hover);
+
+            background: rgba(255,255,255,.06);
+        }
+
+        .social-icon {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,.06);
+        }
+
+        .social-icon svg {
+            width: 18px;
+        }
+
+        .social-text {
+            margin-left: 10px;
+        }
+
+        .social-text strong {
+            display: block;
+
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .social-text span {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #666;
+
+            font-size: 8px;
+        }
+
+
+        /* =========================================================
+           ABOUT
+        ========================================================= */
+
+        .about {
+            margin-top: 11px;
+
+            padding: 20px;
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius-md);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.035),
+                    rgba(255,255,255,.012)
+                );
+        }
+
+        .about-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            margin-bottom: 9px;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .about-title svg {
+            width: 16px;
+            color: var(--red);
+        }
+
+        .about p {
+            color: #858585;
+
+            font-size: 11px;
+
+            line-height: 1.65;
+        }
+
+
+        /* =========================================================
+           CONTACT
+        ========================================================= */
+
+        .contact {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            width: 100%;
+
+            margin-top: 12px;
+
+            padding: 15px;
+
+            border-radius: 14px;
+
+            border: 1px solid rgba(227,6,19,.3);
+
+            background: rgba(227,6,19,.06);
+
+            color: #eee;
+
+            text-decoration: none;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            transition: .25s ease;
+        }
+
+        .contact svg {
+            width: 16px;
+        }
+
+        .contact:hover {
+            background: rgba(227,6,19,.12);
+
+            border-color: rgba(227,6,19,.5);
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            padding: 30px 0 8px;
+
+            text-align: center;
+
+            color: #444;
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
+        }
+
+        footer span {
+            color: var(--red);
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 380px) {
+
+            .container {
+                width: min(100% - 22px, 470px);
+            }
+
+            .profile {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .name {
+                font-size: 24px;
+            }
+
+            .link {
+                min-height: 62px;
+            }
+
+            .social-grid {
+                gap: 8px;
+            }
+        }
+
+
+        /* =========================================================
+           REDUZIR ANIMAÇÕES
+        ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
 
     </style>
 </head>
+
+
 <body>
 
-    <div id="loader">
-        <div class="loader-content">
-            <h2 style="letter-spacing: 4px; font-weight: 800; font-size: 14px;">SILVA REPÓRTER</h2>
-            <div class="loader-bar"></div>
+
+<!-- =============================================================
+     LOADER
+============================================================= -->
+
+<div id="loader">
+
+    <div class="loader-content">
+
+        <div class="loader-logo">
+            SILVA REPÓRTER
         </div>
+
+        <div class="loader-sub">
+            Jornalismo Independente
+        </div>
+
+        <div class="loader-line"></div>
+
     </div>
 
-    <div class="container">
-        <div class="profile-card">
-            <div class="img-container">
-                <img src="https://i.imgur.com/xOMsiUk.png" alt="Silva Repórter" class="profile-img">
-                <div class="status-dot"></div>
+</div>
+
+
+
+<!-- =============================================================
+     CONTEÚDO
+============================================================= -->
+
+<main class="container">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="brand-mini">
+            Silva Repórter
+        </div>
+
+        <div class="online">
+            JORNALISMO INDEPENDENTE
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         PERFIL
+    ========================================================= -->
+
+    <section class="profile">
+
+        <div class="photo-wrapper">
+
+            <div class="photo-ring"></div>
+
+            <img
+                src="https://i.imgur.com/xOMsiUk.png"
+                alt="Silva Repórter"
+                class="profile-photo"
+                loading="eager"
+            >
+
+            <div
+                class="live-dot"
+                title="Online"
+            ></div>
+
+        </div>
+
+
+        <div class="category">
+            Jornalismo Independente
+        </div>
+
+
+        <h1 class="name">
+
+            Repórter Silva
+
+            <svg
+                class="verified"
+                viewBox="0 0 24 24"
+                aria-label="Perfil verificado"
+            >
+                <path d="M22.5 12.5c0-1.58-.88-2.95-2.18-3.66.15-.44.23-.91.23-1.4 0-2.31-1.87-4.18-4.18-4.18-.49 0-.96.08-1.4.23C14.45 2.18 13.08 1.3 11.5 1.3s-2.95.88-3.66 2.18c-.44-.15-.91-.23-1.4-.23-2.31 0-4.18 1.87-4.18 4.18 0 .49.08.96.23 1.4C1.3 9.55.42 10.92.42 12.5s.88 2.95 2.18 3.66c-.15.44-.23.91-.23 1.4 0 2.31 1.87 4.18 4.18 4.18.49 0 .96-.08 1.4-.23 1.05 1.3 2.18 2.18 3.66 2.18s2.95-.88 3.66-2.18c.44.15.91.23 1.4.23 2.31 0 4.18-1.87 4.18-4.18 0-.49-.08-.96-.23-1.4 1.3-.71 2.18-2.08 2.18-3.66zm-12.75 4.5l-3.75-3.75 1.41-1.41 2.34 2.34 5.94-5.94 1.41 1.41-7.35 7.35z"/>
+            </svg>
+
+        </h1>
+
+
+        <p class="headline">
+
+            <strong>A voz das ruas.</strong>
+            A notícia em tempo real.<br>
+
+            Informação, denúncias e histórias que precisam ser ouvidas.
+
+        </p>
+
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <strong>NEWS</strong>
+
+                <span>Conteúdo</span>
+
             </div>
 
-            <span class="tag">Jornalismo Independente</span>
-            
-            <h1>
-                Repórter Silva 
-                <svg class="verified-icon" viewBox="0 0 24 24" width="20" height="20">
-                    <path d="M22.5 12.5c0-1.58-.88-2.95-2.18-3.66.15-.44.23-.91.23-1.4 0-2.31-1.87-4.18-4.18-4.18-.49 0-.96.08-1.4.23C14.45 2.18 13.08 1.3 11.5 1.3s-2.95.88-3.66 2.18c-.44-.15-.91-.23-1.4-.23-2.31 0-4.18 1.87-4.18 4.18 0 .49.08.96.23 1.4C1.3 9.55.42 10.92.42 12.5s.88 2.95 2.18 3.66c-.15.44-.23.91-.23 1.4 0 2.31 1.87 4.18 4.18 4.18.49 0 .96-.08 1.4-.23 1.05 1.3 2.18 2.18 3.66 2.18s2.95-.88 3.66-2.18c.44.15.91.23 1.4.23 2.31 0 4.18-1.87 4.18-4.18 0-.49-.08-.96-.23-1.4 1.3-.71 2.18-2.08 2.18-3.66zm-12.75 4.5l-3.75-3.75 1.41-1.41 2.34 2.34 5.94-5.94 1.41 1.41-7.35 7.35z"></path>
-                </svg>
-            </h1>
 
-            <p class="bio">
-                A voz das ruas e a notícia em tempo real. <br>
-                Compromisso com a verdade e a transparência.
-            </p>
+            <div class="stat">
+
+                <strong>24H</strong>
+
+                <span>Informação</span>
+
+            </div>
+
+
+            <div class="stat">
+
+                <strong>LOCAL</strong>
+
+                <span>Comunidade</span>
+
+            </div>
+
         </div>
 
-        <div class="links-gap">
-            <a href="https://www.instagram.com/reportersilva" target="_blank" class="link-card featured">
-                <span><i data-lucide="instagram" style="margin-right: 10px; vertical-align: middle;"></i> Instagram Oficial</span>
-                <i data-lucide="arrow-right"></i>
-            </a>
+    </section>
 
-            <a href="https://www.tiktok.com/@silvareporter" target="_blank" class="link-card">
-                <span><i data-lucide="video" style="margin-right: 10px; vertical-align: middle;"></i> TikTok</span>
-                <i data-lucide="arrow-right"></i>
-            </a>
 
-            <a href="https://k.kwai.com/u/@silva_reporter" target="_blank" class="link-card">
-                <span><i data-lucide="play-circle" style="margin-right: 10px; vertical-align: middle;"></i> Kwai</span>
-                <i data-lucide="arrow-right"></i>
-            </a>
 
-            <a href="/embreve.html" target="_blank" class="link-card">
-                <span><i data-lucide="bell" style="margin-right: 10px; vertical-align: middle;"></i> Últimas Notícias</span>
-                <i data-lucide="arrow-right"></i>
-            </a>
-        </div>
+    <!-- =========================================================
+         PRINCIPAIS
+    ========================================================= -->
 
-        <footer>
-            &copy; 2026 Silva Repórter &bull; Feito com muito ❤️ e ☕ por Silva
-        </footer>
+    <div class="section-label">
+        Acompanhe o Silva Repórter
     </div>
 
-    <script>
-        // Inicializar ícones
-        lucide.createIcons();
 
-        // Remover loader após tempo de animação
-        window.addEventListener('load', () => {
+    <div class="links">
+
+
+        <!-- INSTAGRAM -->
+
+        <a
+            href="https://www.instagram.com/reportersilva"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link featured"
+        >
+
+            <div class="icon-box">
+                <i data-lucide="instagram"></i>
+            </div>
+
+            <div class="link-content">
+
+                <span class="link-title">
+                    Instagram Oficial
+                </span>
+
+                <span class="link-description">
+                    Reportagens, vídeos e notícias
+                </span>
+
+            </div>
+
+            <i
+                data-lucide="arrow-up-right"
+                class="arrow"
+            ></i>
+
+        </a>
+
+
+
+        <!-- NOTÍCIAS -->
+
+        <a
+            href="/embreve.html"
+            class="link"
+        >
+
+            <div class="icon-box">
+                <i data-lucide="newspaper"></i>
+            </div>
+
+            <div class="link-content">
+
+                <span class="link-title">
+                    Últimas Notícias
+                </span>
+
+                <span class="link-description">
+                    Acompanhe os acontecimentos
+                </span>
+
+            </div>
+
+            <i
+                data-lucide="arrow-right"
+                class="arrow"
+            ></i>
+
+        </a>
+
+
+
+        <!-- TIKTOK -->
+
+        <a
+            href="https://www.tiktok.com/@silvareporter"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link"
+        >
+
+            <div class="icon-box">
+                <i data-lucide="video"></i>
+            </div>
+
+            <div class="link-content">
+
+                <span class="link-title">
+                    TikTok
+                </span>
+
+                <span class="link-description">
+                    Notícias em vídeos curtos
+                </span>
+
+            </div>
+
+            <i
+                data-lucide="arrow-up-right"
+                class="arrow"
+            ></i>
+
+        </a>
+
+
+
+        <!-- KWAI -->
+
+        <a
+            href="https://k.kwai.com/u/@silva_reporter"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link"
+        >
+
+            <div class="icon-box">
+                <i data-lucide="play-circle"></i>
+            </div>
+
+            <div class="link-content">
+
+                <span class="link-title">
+                    Kwai
+                </span>
+
+                <span class="link-description">
+                    Mais conteúdo e informação
+                </span>
+
+            </div>
+
+            <i
+                data-lucide="arrow-up-right"
+                class="arrow"
+            ></i>
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         REDES
+    ========================================================= -->
+
+    <div class="section-label">
+        Redes sociais
+    </div>
+
+
+    <div class="social-grid">
+
+
+        <a
+            href="https://www.instagram.com/reportersilva"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social"
+        >
+
+            <div class="social-icon">
+                <i data-lucide="instagram"></i>
+            </div>
+
+            <div class="social-text">
+
+                <strong>Instagram</strong>
+
+                <span>@reportersilva</span>
+
+            </div>
+
+        </a>
+
+
+
+        <a
+            href="https://www.tiktok.com/@silvareporter"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social"
+        >
+
+            <div class="social-icon">
+                <i data-lucide="music-2"></i>
+            </div>
+
+            <div class="social-text">
+
+                <strong>TikTok</strong>
+
+                <span>@silvareporter</span>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- =========================================================
+         SOBRE
+    ========================================================= -->
+
+    <div class="section-label">
+        Sobre o trabalho
+    </div>
+
+
+    <section class="about">
+
+        <div class="about-title">
+
+            <i data-lucide="mic-2"></i>
+
+            Jornalismo que vai até você
+
+        </div>
+
+
+        <p>
+
+            Notícias, denúncias, entrevistas e histórias da comunidade.
+            O trabalho do Silva Repórter busca levar informação com
+            responsabilidade, transparência e proximidade com as pessoas.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         CONTATO
+    ========================================================= -->
+
+    <a
+        href="https://www.instagram.com/reportersilva"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="contact"
+    >
+
+        <i data-lucide="message-circle"></i>
+
+        Fale com o Silva Repórter
+
+    </a>
+
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
+    <footer>
+
+        © <span id="year"></span>
+        Silva Repórter
+
+        •
+
+        Jornalismo Independente
+
+    </footer>
+
+
+</main>
+
+
+
+<!-- =============================================================
+     JAVASCRIPT
+============================================================= -->
+
+<script>
+
+    /* =========================================================
+       ÍCONES
+    ========================================================= */
+
+    lucide.createIcons();
+
+
+
+    /* =========================================================
+       LOADER
+    ========================================================= */
+
+    window.addEventListener("load", () => {
+
+        setTimeout(() => {
+
+            document.body.classList.add("loaded");
+
+        }, 700);
+
+    });
+
+
+
+    /* =========================================================
+       ANO AUTOMÁTICO
+    ========================================================= */
+
+    document.getElementById("year").textContent =
+        new Date().getFullYear();
+
+
+
+    /* =========================================================
+       PREVENIR CLIQUE DUPLO / FEEDBACK MOBILE
+    ========================================================= */
+
+    document.querySelectorAll("a").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            link.style.transform = "scale(.985)";
+
             setTimeout(() => {
-                document.body.classList.add('loaded');
-            }, 1000);
+
+                link.style.transform = "";
+
+            }, 130);
+
         });
-    </script>
+
+    });
+
+</script>
+
 </body>
 </html>
